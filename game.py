@@ -1,4 +1,6 @@
 from board import Board
+from player import *
+from numpy import random
 
 """
 A wrapper for the Tsuro game.
@@ -25,7 +27,14 @@ class Game:
         self.num_players = num_players
         self.deck = deck
         self.board = Board(rows, cols)
-        self.players = [[None] * num_players]
+        self.players = [None] * num_players
+        #self.players = []
+        playerNames = ["Red","Orange","Yellow","Green","Blue","Indigo","Violet","Black"]
+        random.shuffle(playerNames)
+        for p in range(num_players):
+            playerA = Player(playerNames[p], p)
+            self.add_player(playerA, p)
+            #self.players.append(playerA)
         self.in_game = False
         self.current_player = None
 
@@ -37,7 +46,7 @@ class Game:
             player (Player): Player to add to game.
             turn (int): Player's turn, zero-indexed.
         """
-        self.players[turn] = self.players
+        self.players[turn] = player
 
     def start(self):
         """
