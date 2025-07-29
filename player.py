@@ -19,7 +19,7 @@ class Player:
             turn (int): Zero-based index indicating player turn.
         """
         self.name = name
-        self.player = player
+        self.player = Player
         self.turn = turn
         self.hand = []
         self.visited = []

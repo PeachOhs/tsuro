@@ -24,7 +24,7 @@ class Game:
         """
         self.num_players = num_players
         self.deck = deck
-        self.board = Board(rows, cols):
+        self.board = Board(rows, cols)
         self.players = [[None] * num_players]
         self.in_game = False
         self.current_player = None
@@ -72,7 +72,7 @@ class Game:
         for player in self.players:
             if player is not None:
                 count += 1
-        if count = 1:
+        if count == 1:
             self.in_game = False
             return
         while True:

@@ -56,32 +56,32 @@ class Tile:
         self.connected_pairs = connected_pairs
         self.is_dragon_tile = len(self.connected_pairs) == 0
 
-    def rotate_left():
+    def rotate_left(self):
         """
         Rotates the tile left (-90 degrees).
         """
         self.north = FACES_ORDER[FACES[self.north] - 1]
 
-    def rotate_right():
+    def rotate_right(self):
         """
         Rotates the tile right (90 degrees).
         """
         self.north = FACES_ORDER[(FACES[self.north] + 1) % 4]
 
-    def flip():
+    def flip(self):
         """
         Flips the tile (rotates it 180 degrees).
         """
         self.north = FACES_ORDER[(FACES[self.north] + 2) % 4]
 
-    def transform():
+    def transform(self):
         """
         Transforms a rotated tile's graph.
         """
         self.north = "A"
         offset = (FACES[self.north] * 2) - 2
         new_connected_pairs = []
-        for pair in connected_pairs:
+        for pair in self.connected_pairs:
             new_connected_pairs.append((
                 (pair[0] + offset % 8), (pair[1] + offset % 8)
             ))
