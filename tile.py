@@ -42,7 +42,7 @@ class Tile:
     An empty tile represents a Dragon Tile.
     """
 
-    def __init__(self, connected_pairs):
+    def __init__(self, name, connected_pairs):
         """
         Creates a new Tile.
 
@@ -51,6 +51,7 @@ class Tile:
                 node x is connected to node y in the tile, where
                 1 <= x, y <= 8.
         """
+        self.name = name
         self.north = "A"
         self.graph = {}
         self.connected_pairs = connected_pairs
