@@ -24,6 +24,21 @@ class Player:
         self.hand = []
         self.visited = []
         self.in_game = False
+        self.index = 0
+
+    def __iter__(self):
+        # Returns the iterator object (in this case, self)
+        return self
+    
+    def __next__(self):
+        # Provides the next item in the sequence
+        if self.index < len(self.name):
+            item = self.name[self.index]
+            self.index += 1
+            return item
+        else:
+            # Raises StopIteration when no more items are available
+            raise StopIteration
 
     def add_to_visited(self, graph_index):
         """
@@ -48,3 +63,6 @@ class Player:
         Gets a tile from the Player's hand.
         """
         return self.hand.pop()
+
+    def get_name(self):
+        return str(self.name)

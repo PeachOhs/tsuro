@@ -54,6 +54,8 @@ class Game:
         """
         if all([x is not None for x in self.players]):
             self.in_game = True
+        #if self.in_game == True:
+            self.next_turn()
 
     def add_tile(self, tile, board_index):
         """
@@ -77,16 +79,44 @@ class Game:
         """
         Moves the game to the next player/turn.
         """
-        count = 0
+        countActive = 0
+        active = []
+        countInactive = 0
         for player in self.players:
             if player is not None:
-                count += 1
-        if count == 1:
+                countActive += 1
+                print("Active: "+player.get_name())
+                active += player
+            else:
+            #elif player.in_game == False:
+                countInactive += 1
+                print("Inactive: "+player.get_name())
+        print(str(countActive)+"/"+str(self.num_players))
+        if countInactive >= self.num_players-1:
             self.in_game = False
             return
         while True:
-            self.current_player = self.players
+            #self.current_player = self.players
+            """
+            cycle through self.players
+            """
             if self.current_player is not None:
+                idx = -1
+                try:
+                    idx = active.index(self.current_player)
+                except:
+                    pass
+                if idx > -1:
+                    self.current_player = active[idx+1]
+                    print("Current player: "+self.current_player)
+                    break
+                idx = player.index(self.current_player)
+                #while True:
+                    #print("Current player: "+self.current_player)
+                    #break
+            else:
+                self.current_player = active[0]
+                print("Current player: "+self.current_player)
                 break
 
     def winner(self):
@@ -97,4 +127,4 @@ class Game:
             for player in self.players:
                 if player is not None:
                     count += 1
-
+                    print("Winner: "+player)
