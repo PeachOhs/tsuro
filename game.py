@@ -1,6 +1,7 @@
 from board import Board
 from player import *
 from numpy import random
+import numpy
 import array
 import itertools
 
@@ -69,8 +70,16 @@ class Game:
         """
         if all([x is not None for x in self.players]):
             self.in_game = True
-        #if self.in_game == True:
+        
+        # activate below line once full game logic is in place
+        #while (self.in_game):
+        # deactivate below line once full game logic is in place
+        i = 0
+        # deactivate below line once full game logic is in place
+        while (i in numpy.arange(0,16)):
             self.next_turn()
+            # deactivate below line once full game logic is in place
+            i += 1
 
     def add_tile(self, tile, board_index):
         """
@@ -109,7 +118,7 @@ class Game:
             #elif player.in_game == False:
                 countInactive += 1
                 print("Inactive: "+player.get_name())
-        print(str(countActive)+"/"+str(self.num_players))
+        #print(str(countActive)+"/"+str(self.num_players))
         self.active_players = [None] * countActive
         for p in activeOrder:
             self.active_player(self.players[p], p)
@@ -128,8 +137,12 @@ class Game:
                     idx = self.active_players.index(self.current_player)
                 except:
                     pass
+                print("idx: "+str(idx))
+                idx += 1
+                if idx >= (self.num_players):
+                    idx = idx - self.num_players
                 if idx > -1:
-                    self.current_player = self.active_players[idx+1]
+                    self.current_player = self.active_players[idx]
                     print("Current player: "+self.current_player.get_name())
                     break
                 idx = self.players.index(self.current_player)
@@ -138,7 +151,7 @@ class Game:
                     break"""
             else:
                 self.current_player = self.players[0]
-                print("Current player: "+self.current_player.get_name())
+                print("First player: "+self.current_player.get_name())
                 break
 
     def winner(self):
