@@ -101,7 +101,7 @@ class Game:
         for player in self.players:
             if player is not None and player.in_game:
                 countActive += 1
-                print("Active: "+player.get_name())
+                #print("Active: "+player.get_name())
                 #active += player
                 activeOrder.append(self.players.index(player))
                 #activeOrder += int(self.players.index(player))
@@ -113,7 +113,7 @@ class Game:
         self.active_players = [None] * countActive
         for p in activeOrder:
             self.active_player(self.players[p], p)
-            print("Active: "+self.players[p])
+            #print("Active: "+self.players[p].get_name())
         if countInactive >= self.num_players-1:
             self.in_game = False
             return
@@ -130,7 +130,7 @@ class Game:
                     pass
                 if idx > -1:
                     self.current_player = self.active_players[idx+1]
-                    print("Current player: "+self.current_player)
+                    print("Current player: "+self.current_player.get_name())
                     break
                 idx = self.players.index(self.current_player)
                 """while True:
@@ -138,7 +138,7 @@ class Game:
                     break"""
             else:
                 self.current_player = self.players[0]
-                print("Current player: "+self.current_player)
+                print("Current player: "+self.current_player.get_name())
                 break
 
     def winner(self):
@@ -149,4 +149,4 @@ class Game:
             for player in self.players:
                 if player is not None:
                     count += 1
-                    print("Winner: "+player)
+                    print("Winner: "+player.get_name())
