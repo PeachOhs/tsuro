@@ -78,6 +78,9 @@ class Game:
         # deactivate below line once full game logic is in place
         while (i in numpy.arange(0,16)):
             self.next_turn()
+            # test eliminate player
+            if i == 10:
+                self.current_player.remove_from_game()
             # deactivate below line once full game logic is in place
             i += 1
 
@@ -137,10 +140,9 @@ class Game:
                     idx = self.active_players.index(self.current_player)
                 except:
                     pass
-                print("idx: "+str(idx))
                 idx += 1
-                if idx >= (self.num_players):
-                    idx = idx - self.num_players
+                if idx >= (countActive):
+                    idx = idx - countActive
                 if idx > -1:
                     self.current_player = self.active_players[idx]
                     print("Current player: "+self.current_player.get_name())
