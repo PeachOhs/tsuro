@@ -66,3 +66,9 @@ class Player:
 
     def get_name(self):
         return str(self.name)
+
+    def add_to_game(self):
+        self.in_game = True
+    
+    def remove_from_game(self):
+        self.in_game = False

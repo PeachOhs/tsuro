@@ -1,6 +1,8 @@
 from board import Board
 from player import *
 from numpy import random
+import array
+import itertools
 
 """
 A wrapper for the Tsuro game.
@@ -28,12 +30,14 @@ class Game:
         self.deck = deck
         self.board = Board(rows, cols)
         self.players = [None] * num_players
+        self.active_players = [None] * num_players
         #self.players = []
-        playerNames = ["Red","Orange","Yellow","Green","Blue","Indigo","Violet","Black"]
+        playerNames = ["Red","Orange","Yellow","Green","Blue","Indigo","Violet","White"]
         random.shuffle(playerNames)
         for p in range(num_players):
             playerA = Player(playerNames[p], p)
             self.add_player(playerA, p)
+            self.active_player(playerA, p)
             #self.players.append(playerA)
         self.in_game = False
         self.current_player = None
@@ -46,7 +50,18 @@ class Game:
             player (Player): Player to add to game.
             turn (int): Player's turn, zero-indexed.
         """
+        player.add_to_game()
         self.players[turn] = player
+
+    def active_player(self, player, turn):
+        """
+        Adds a player to the game.
+
+        Args:
+            player (Player): Player to add to game.
+            turn (int): Player's turn, zero-indexed.
+        """
+        self.active_players[turn] = player
 
     def start(self):
         """
@@ -80,18 +95,25 @@ class Game:
         Moves the game to the next player/turn.
         """
         countActive = 0
-        active = []
         countInactive = 0
+        #activeOrder = []
+        activeOrder = array_of_signed_ints = array.array("i")
         for player in self.players:
-            if player is not None:
+            if player is not None and player.in_game:
                 countActive += 1
                 print("Active: "+player.get_name())
-                active += player
+                #active += player
+                activeOrder.append(self.players.index(player))
+                #activeOrder += int(self.players.index(player))
             else:
             #elif player.in_game == False:
                 countInactive += 1
                 print("Inactive: "+player.get_name())
         print(str(countActive)+"/"+str(self.num_players))
+        self.active_players = [None] * countActive
+        for p in activeOrder:
+            self.active_player(self.players[p], p)
+            print("Active: "+self.players[p])
         if countInactive >= self.num_players-1:
             self.in_game = False
             return
@@ -103,19 +125,19 @@ class Game:
             if self.current_player is not None:
                 idx = -1
                 try:
-                    idx = active.index(self.current_player)
+                    idx = self.active_players.index(self.current_player)
                 except:
                     pass
                 if idx > -1:
-                    self.current_player = active[idx+1]
+                    self.current_player = self.active_players[idx+1]
                     print("Current player: "+self.current_player)
                     break
-                idx = player.index(self.current_player)
-                #while True:
-                    #print("Current player: "+self.current_player)
-                    #break
+                idx = self.players.index(self.current_player)
+                """while True:
+                    print("Current player: "+self.current_player)
+                    break"""
             else:
-                self.current_player = active[0]
+                self.current_player = self.players[0]
                 print("Current player: "+self.current_player)
                 break
 
