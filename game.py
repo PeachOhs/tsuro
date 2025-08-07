@@ -34,11 +34,11 @@ class Game:
         self.active_players = [None] * num_players
         #self.players = []
         playerNames = ["Red","Orange","Yellow","Green","Blue","Indigo","Violet","White"]
-        random.shuffle(playerNames)
+        #random.shuffle(playerNames)
         for p in range(num_players):
             playerA = Player(playerNames[p], p)
             self.add_player(playerA, p)
-            self.active_player(playerA, p)
+            self.active_player(playerA)
             #self.players.append(playerA)
         self.in_game = False
         self.current_player = None
@@ -54,7 +54,7 @@ class Game:
         player.add_to_game()
         self.players[turn] = player
 
-    def active_player(self, player, turn):
+    def active_player(self, player):
         """
         Adds a player to the game.
 
@@ -62,7 +62,8 @@ class Game:
             player (Player): Player to add to game.
             turn (int): Player's turn, zero-indexed.
         """
-        self.active_players[turn] = player
+        # set player to first None in self.active_players
+        self.active_players[self.active_players.index(None)] = player
 
     def start(self):
         """
@@ -76,11 +77,14 @@ class Game:
         # deactivate below line once full game logic is in place
         i = 0
         # deactivate below line once full game logic is in place
-        while (i in numpy.arange(0,16)):
+        while (i in numpy.arange(0,32) and self.in_game):
             self.next_turn()
-            # test eliminate player
-            if i == 10:
+            # test eliminate player on their turn
+            if i in numpy.array([10,13,18,24]):
                 self.current_player.remove_from_game()
+            # test eliminate player on another player's turn
+            if i in numpy.array([14,18,22]):
+                self.active_players[0].remove_from_game()
             # deactivate below line once full game logic is in place
             i += 1
 
@@ -120,14 +124,15 @@ class Game:
             else:
             #elif player.in_game == False:
                 countInactive += 1
-                print("Inactive: "+player.get_name())
+                #print("Inactive: "+player.get_name())
         #print(str(countActive)+"/"+str(self.num_players))
         self.active_players = [None] * countActive
         for p in activeOrder:
-            self.active_player(self.players[p], p)
+            self.active_player(self.players[p])
             #print("Active: "+self.players[p].get_name())
         if countInactive >= self.num_players-1:
             self.in_game = False
+            self.winner()
             return
         while True:
             #self.current_player = self.players
@@ -135,15 +140,25 @@ class Game:
             cycle through self.players
             """
             if self.current_player is not None:
-                idx = -1
+                idx = None
                 try:
                     idx = self.active_players.index(self.current_player)
                 except:
+                    # current_player is no longer active
+                    idx = self.players.index(self.current_player)
+                    # set idx to the first active player just before the current_player
+                    while True:
+                        idx -= 1
+                        if idx < 0:
+                            idx += self.num_players
+                        if self.players[idx] in self.active_players:
+                            idx = self.active_players.index(self.players[idx])
+                            break
                     pass
                 idx += 1
                 if idx >= (countActive):
                     idx = idx - countActive
-                if idx > -1:
+                if idx is not None:
                     self.current_player = self.active_players[idx]
                     print("Current player: "+self.current_player.get_name())
                     break
@@ -161,7 +176,7 @@ class Game:
         Returns the winner of the game.
         """
         if not self.in_game:
-            for player in self.players:
+            for player in self.active_players:
                 if player is not None:
-                    count += 1
+                    #count += 1
                     print("Winner: "+player.get_name())

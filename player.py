@@ -71,4 +71,5 @@ class Player:
         self.in_game = True
     
     def remove_from_game(self):
+        print("Inactive: "+self.get_name())
         self.in_game = False
