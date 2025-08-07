@@ -167,6 +167,16 @@ class Game:
                     print("Current player: "+self.current_player)
                     break"""
             else:
+                # draw 3 tiles per player
+                for three in numpy.arange(0,3):
+                    for drawplayer in self.players:
+                        if drawplayer is not None:
+                            tile = self.deck.pop()
+                            drawplayer.add_to_hand(tile)
+                            if three == 2:
+                                #TODO: Placer player pawn on edge of board
+                                print("Place "+ drawplayer.get_name() +" pawn on edge of board")
+                    three += 1
                 self.current_player = self.players[0]
                 print("First player: "+self.current_player.get_name())
                 break
