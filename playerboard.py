@@ -23,7 +23,7 @@ class PlayerBoard:
         """
         self.rows = rows
         self.cols = cols
-        self.graph_rows = 2 * rows
+        self.graph_rows = 3 * rows + 1
         self.graph_cols = 3 * cols + 1 
         self.grid = [[[None] * self.graph_cols] * self.graph_rows]
         self.positions = {}

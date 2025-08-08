@@ -25,7 +25,7 @@ class PathBoard:
         """
         self.rows = rows
         self.cols = cols
-        self.graph_rows = 2 * rows
+        self.graph_rows = 3 * rows + 1
         self.graph_cols = 3 * cols + 1 
         self.graph = {}
         self.dragon_tile_locations = None

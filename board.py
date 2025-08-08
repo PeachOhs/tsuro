@@ -1,12 +1,42 @@
-from helper import on_edge
+from helper import *
 from pathboard import PathBoard
 from playerboard import PlayerBoard
+import numpy
 
 """
 A board for the Tsuro game.
 
 :Author:     Maded Batara III
 :Version:    v1.0
+
+Board: Rows x Cols
+xxxxxx
+xxxxxx
+xxxxxx
+xxxxxx
+xxxxxx
+xxxxxx
+
+Graph Nodes: 3*Rows+1 x 3*Cols+1
+ xx xx xx xx xx xx 
+x  x  x  x  x  x  x
+x  x  x  x  x  x  x
+ xx xx xx xx xx xx 
+x  x  x  x  x  x  x
+x  x  x  x  x  x  x
+ xx xx xx xx xx xx 
+x  x  x  x  x  x  x
+x  x  x  x  x  x  x
+ xx xx xx xx xx xx 
+x  x  x  x  x  x  x
+x  x  x  x  x  x  x
+ xx xx xx xx xx xx 
+x  x  x  x  x  x  x
+x  x  x  x  x  x  x
+ xx xx xx xx xx xx 
+x  x  x  x  x  x  x
+x  x  x  x  x  x  x
+ xx xx xx xx xx xx 
 """
 
 class Board:
@@ -25,10 +55,18 @@ class Board:
         """
         self.rows = rows
         self.cols = cols
-        self.graph_rows = 2 * rows
-        self.graph_cols = 3 * cols + 1 
+        self.graph_rows = 3 * rows + 1
+        self.graph_cols = 3 * cols + 1
         self.path_board = PathBoard(rows, cols)
         self.player_board = PlayerBoard(rows, cols)
+        self.edge_nodes = []
+        for r in numpy.arange(0,rows):
+            for c in numpy.arange(0,cols):
+                for i in numpy.arange(0,8):
+                    if on_edge(tile_to_board_index(i,(r,c)),self.graph_rows,self.graph_cols):
+                        self.edge_nodes.append(tile_to_board_index(int(i),(int(r),int(c))))
+        self.edge_nodes = list(set(self.edge_nodes))
+        print("Edge nodes: "+str(len(self.edge_nodes))+" but this needs to be 48")
 
     def add_tile(self, tile, board_index):
         """
