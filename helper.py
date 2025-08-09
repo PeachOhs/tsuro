@@ -16,7 +16,7 @@ def tile_to_board_index(tile_index, board_index):
     Returns:
         A 2-tuple indicating the node's position in the graph board.
     """
-    #row_offset=IF(B23<=1,0,IF(OR(B23=7,B23=2),1,IF(OR(B23=6,B23=3),2,3)))
+    
     if tile_index <= 1:
         row_offset = 0
     elif tile_index in [7, 2]:
@@ -25,7 +25,7 @@ def tile_to_board_index(tile_index, board_index):
         row_offset = 2
     else:
         row_offset = 3
-    #column_offset=IF(B23>5,0,IF(AND(B23>1,B23<4),3,IF(OR(B23=0,B23=5),1,2)))
+    
     if tile_index > 5:
         column_offset = 0
     elif 1 < tile_index < 4:
@@ -46,3 +46,93 @@ def on_edge(graph_index, rows, cols):
         cols (int): Number of columns in the grid graph.
     """
     return graph_index[0] == 0 or graph_index[0] == rows - 1 or graph_index[1] == 0 or graph_index[1] == cols - 1
+
+def board_index_to_tile(graph_index, tile_index):
+    """
+    Converts an (x, y) graph board index to a board index.
+
+    Args:
+        graph_index (tuple): Row and column index of the position in the 
+            graph board.
+        tile_index (int): Index of node in tile.
+    Returns:
+        A 2-tuple indicating the tile's position in the board.
+    """
+
+    if tile_index <= 1:
+        row_offset = 0
+    elif tile_index in [7, 2]:
+        row_offset = 1
+    elif tile_index in [6, 3]:
+        row_offset = 2
+    else:
+        row_offset = 3
+    
+    if tile_index > 5:
+        column_offset = 0
+    elif 1 < tile_index < 4:
+        column_offset = 3
+    elif tile_index in [0, 5]:
+        column_offset = 1
+    else:
+        column_offset = 2
+    return (int((graph_index[0] - column_offset)/3),int((graph_index[1] - row_offset)/3))
+
+def board_index_to_tile_facing(graph_index, facing, rows, cols):
+    """
+    Converts an (x, y) graph board index to a board index.
+
+    Args:
+        graph_index (tuple): Row and column index of the position in the 
+            graph board.
+        facing (str/int): Index of the tile facing, with a negative value going to the opposing tile sharing the graph_index.
+        rows (int): Number of rows in the grid graph.
+        cols (int): Number of columns in the grid graph.
+    Returns:
+        A 2-tuple indicating the tile's position in the board.
+    """
+
+    row_offset = 0
+    column_offset = 0
+
+    if facing is None:
+        if on_edge(graph_index, rows, cols):
+            # set facing based on edge
+            if graph_index[0] == 0:
+                facing = "D"
+            elif graph_index[0] == rows - 1:
+                facing = "B"
+            elif graph_index[1] == 0:
+                facing = "A"
+            elif graph_index[1] == cols - 1:
+                facing = "C"
+        else:
+            raise Exception("For board_index_to_tile_facing, facing is needed when graph_index not on edge")
+
+    if facing == "B" or facing == 2 or facing == -4 or facing == "-D":
+        tile_index = graph_index[1]%3 + 1
+        if str(facing)[0] == "-":
+            column_offset = 1
+        #tile_index = 2
+        #tile_index = 3
+    elif facing == "C" or facing == 3 or facing == -1 or facing == "-A":
+        tile_index = graph_index[0]%3 + 3
+        if str(facing)[0] == "-":
+            row_offset = 1
+        #tile_index = 4
+        #tile_index = 5
+    elif facing == "D" or facing == 4 or facing == -2 or facing == "-B":
+        tile_index = graph_index[1]%3 + 5
+        if str(facing)[0] == "-":
+            column_offset = -1
+        #tile_index = 6
+        #tile_index = 7
+    else:#if facing == "A" or facing = 1 or facing == -3 or facing == "-C":
+        tile_index = graph_index[0]%3 - 1
+        if str(facing)[0] == "-":
+            row_offset = -1
+        #tile_index = 0
+        #tile_index = 1
+
+    board_index = board_index_to_tile(graph_index, tile_index)
+    return (board_index[0] + column_offset,board_index[1] + row_offset)

@@ -1,3 +1,5 @@
+from player import *
+
 """
 A board of players for the Tsuro game.
 
@@ -38,10 +40,11 @@ class PlayerBoard:
         """
         self.grid[graph_index[0]][graph_index[1]] = player.turn
         self.positions[player.turn] = graph_index
+        player.add_to_visited(graph_index)
 
     def move(self, player, graph_index):
         """
-        Places a player in the board.
+        Moves a player in the board.
 
         Args:
             player (Player): Player to place in the board.

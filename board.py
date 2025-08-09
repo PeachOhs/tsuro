@@ -80,6 +80,7 @@ class Board:
                 tile board.
         """
         self.path_board.add_tile(tile, board_index)
+        #TODO: self.player_board.move()
 
     def move(self, player):
         """

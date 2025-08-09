@@ -1,6 +1,7 @@
 from board import Board
 from player import *
 from numpy import random
+from helper import *
 import numpy
 import array
 import itertools
@@ -79,6 +80,9 @@ class Game:
         # deactivate below line once full game logic is in place
         while (i in numpy.arange(0,32) and self.in_game):
             self.next_turn()
+            #TODO: test place tiles
+            tilePlace = board_index_to_tile_facing(self.board.player_board.current_position(self.current_player),None,self.board.graph_rows,self.board.graph_cols)
+            self.board.add_tile(self.current_player.get_from_hand(),tilePlace)
             # test eliminate player on their turn
             if i in numpy.array([10,13,18,24]):
                 self.current_player.remove_from_game()
