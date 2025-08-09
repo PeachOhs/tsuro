@@ -1,6 +1,7 @@
 from helper import *
 from pathboard import PathBoard
 from playerboard import PlayerBoard
+from numpy import random
 import numpy
 
 """
@@ -66,7 +67,8 @@ class Board:
                     if on_edge(tile_to_board_index(i,(r,c)),self.graph_rows,self.graph_cols):
                         self.edge_nodes.append(tile_to_board_index(int(i),(int(r),int(c))))
         self.edge_nodes = list(set(self.edge_nodes))
-        print("Edge nodes: "+str(len(self.edge_nodes))+" but this needs to be 48")
+        random.shuffle(self.edge_nodes)
+        #print("Edge nodes: "+str(len(self.edge_nodes))+" but this needs to be 48")
 
     def add_tile(self, tile, board_index):
         """

@@ -14,7 +14,7 @@ The primary objective of this python repository is to make a functional game of 
     - [x] shuffle the tiles in the deck
 - [x] [game.py](game.py) initializes the players and deck
     - [x] each player draws 3 tiles
-    - [ ] each player places their pawn on one of the outside marks on the board
+    - [x] each player places their pawn on one of the outside marks on the board
     - [x] starts the first and subsequent turns
     - [ ] player turn functionality
         - [ ] current player places a path tile from the tiles in their hand

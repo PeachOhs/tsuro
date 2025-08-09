@@ -25,7 +25,7 @@ class PlayerBoard:
         self.cols = cols
         self.graph_rows = 3 * rows + 1
         self.graph_cols = 3 * cols + 1 
-        self.grid = [[[None] * self.graph_cols] * self.graph_rows]
+        self.grid = [[None for _ in range(self.graph_cols)] for _ in range(self.graph_rows)]
         self.positions = {}
 
     def place(self, player, graph_index):

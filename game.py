@@ -174,10 +174,9 @@ class Game:
                             tile = self.deck.pop()
                             drawplayer.add_to_hand(tile)
                             if three == 2:
-                                #TODO: Placer player pawn on edge of board
-                                print("Place "+ drawplayer.get_name() +" pawn on edge of board")
-                                #TODO: player_board tuple
-                                #self.board.player_board.place(drawplayer,())
+                                # Place player pawn on edge of board
+                                #print("Place "+ drawplayer.get_name() +" pawn on edge of board")
+                                self.board.player_board.place(drawplayer,self.board.edge_nodes.pop())
                     three += 1
                 self.current_player = self.players[0]
                 print("First player: "+self.current_player.get_name())
