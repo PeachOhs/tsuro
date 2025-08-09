@@ -5,7 +5,7 @@ A board of paths for the Tsuro game.
 :Version:    v1.0
 """
 
-from helper import tile_to_board_index
+from helper import *
 
 class PathBoard:
     """
@@ -46,7 +46,7 @@ class PathBoard:
                     tile_to_board_index(i, board_index)
                 )
             return
-        tile.transform(tile)
+        tile.transform()
         for pair in tile.connected_pairs:
             one = tile_to_board_index(pair[0], board_index)
             two = tile_to_board_index(pair[1], board_index)
@@ -63,7 +63,8 @@ class PathBoard:
             visited (list): List of already visited graph indices.
         """
         adj = []
-        for node in self.graph[graph_index]:
-            if node not in visited:
-                adj.append(node)
+        #for node in self.graph[graph_index]:
+        node = self.graph[graph_index]
+        if node not in visited:
+            adj.append(node)
         return adj

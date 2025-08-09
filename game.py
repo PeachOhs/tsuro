@@ -82,7 +82,7 @@ class Game:
             self.next_turn()
             #TODO: test place tiles
             tilePlace = board_index_to_tile_facing(self.board.player_board.current_position(self.current_player),None,self.board.graph_rows,self.board.graph_cols)
-            self.board.add_tile(self.current_player.get_from_hand(),tilePlace)
+            self.add_tile(self.current_player.get_from_hand(),tilePlace)
             # test eliminate player on their turn
             if i in numpy.array([10,13,18,24]):
                 self.current_player.remove_from_game()
@@ -101,14 +101,27 @@ class Game:
             board_index (tuple): Row and column index of the tile in the 
                 tile board.
         """
+        tile.transform()
         self.board.add_tile(tile, board_index)
 
-    def move(self):
+        tile_indexes = []
+        for i in numpy.arange(0,8):
+            tile_indexes.append(tile_to_board_index(i,board_index))
+
+        # Move current player
+        self.move(self.current_player)
+        # Move every other player if they were on tilePlace
+        for moving_player in self.active_players:
+            if moving_player != self.current_player and moving_player.visited[-1] in tile_indexes:
+                self.move(moving_player)
+
+    def move(self, player):
         """
         Moves the current player along the line.
         """
-        if not self.board.move(self.current_player):
-            self.players[self.current_player.turn] = None
+        if not self.board.move(player):
+            #self.players[player.turn] = None
+            player.remove_from_game()
 
     def next_turn(self):
         """

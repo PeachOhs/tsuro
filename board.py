@@ -1,6 +1,7 @@
 from helper import *
 from pathboard import PathBoard
 from playerboard import PlayerBoard
+from tileboard import TileBoard
 from numpy import random
 import numpy
 
@@ -60,6 +61,7 @@ class Board:
         self.graph_cols = 3 * cols + 1
         self.path_board = PathBoard(rows, cols)
         self.player_board = PlayerBoard(rows, cols)
+        self.tile_board = TileBoard(rows, cols)
         self.edge_nodes = []
         for r in numpy.arange(0,rows):
             for c in numpy.arange(0,cols):
@@ -80,7 +82,8 @@ class Board:
                 tile board.
         """
         self.path_board.add_tile(tile, board_index)
-        #TODO: self.player_board.move()
+        self.tile_board.add_tile(tile, board_index)
+        #self.move()
 
     def move(self, player):
         """
@@ -94,7 +97,7 @@ class Board:
         """
         current_position = self.player_board.current_position(player)
         while True:
-            adj = self.path_board.adj(current_position)
+            adj = self.path_board.adj(current_position,player.visited)
             if len(adj) == 0:
                 break
             current_position = adj[0]

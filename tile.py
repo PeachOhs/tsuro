@@ -79,7 +79,6 @@ class Tile:
         """
         Transforms a rotated tile's graph.
         """
-        self.north = "A"
         offset = (FACES[self.north] * 2) - 2
         new_connected_pairs = []
         for pair in self.connected_pairs:
@@ -87,4 +86,4 @@ class Tile:
                 (pair[0] + offset % 8), (pair[1] + offset % 8)
             ))
         self.connected_pairs = new_connected_pairs
-        
+        self.north = "A"
