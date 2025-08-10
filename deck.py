@@ -38,7 +38,7 @@ class Deck:
         
         self.shuffle()
         connected_pairs = []
-        tile = Tile(data[a[0]]["tile"], connected_pairs)
+        tile = Tile(data[0]["tile"], connected_pairs)
         tile.is_dragon_tile = True
         self.push(tile)
 
@@ -50,13 +50,37 @@ class Deck:
             tile (Tile): Tile to add to the deck.
         """
         self.deck.append(tile)
+        # If the dragon tile is in the deck, push it to the back of the deck
+        names = self.deck.get_names()
+        if "00" in names:
+            index = names.index("00")
+            dragon = self.deck.pop(index)
+            self.deck.append(dragon)
 
     def pop(self):
         """
-        Gets and returns a tile from the deck.
+        Gets and returns a tile from the top of the deck.
         """
-        return self.deck.pop()
+        return self.deck.pop(0)
 
     def shuffle(self):
+        """
+        Shuffles the deck
+        """
         from random import shuffle
         shuffle(self.deck)
+        # If the dragon tile is in the deck, push it to the back of the deck
+        names = self.deck.get_names()
+        if "00" in names:
+            index = names.index("00")
+            dragon = self.deck.pop(index)
+            self.deck.append(dragon)
+    
+    def get_names(self):
+        """
+        Returns the names of each tile in the deck in the order that they are in
+        """
+        names = []
+        for tile in self.deck:
+            names.append(tile.name)
+        return names
