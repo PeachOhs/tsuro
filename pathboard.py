@@ -28,7 +28,7 @@ class PathBoard:
         self.graph_rows = 3 * rows + 1
         self.graph_cols = 3 * cols + 1 
         self.graph = {}
-        self.dragon_tile_locations = None
+        self.dragon_tile_locations = []
 
     def add_tile(self, tile, board_index):
         """
@@ -55,7 +55,7 @@ class PathBoard:
 
     def adj(self, graph_index, visited):
         """
-        Gets the tiles adjacent to the graph index.
+        Gets the nodes adjacent to the graph index.
 
         Args:
             graph_index (tuple): Row and column index of the node in the
@@ -64,7 +64,11 @@ class PathBoard:
         """
         adj = []
         #for node in self.graph[graph_index]:
-        node = self.graph[graph_index]
+        try:
+            node = self.graph[graph_index]
+        except KeyError:
+            ##TODO: might be on board edge
+            node = graph_index
         if node not in visited:
             adj.append(node)
         return adj

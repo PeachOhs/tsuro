@@ -50,7 +50,7 @@ class PlayerBoard:
             player (Player): Player to place in the board.
             graph_index (tuple): Row and column of node to place player in.
         """
-        self.grid[self.positions[player.turn[0]]][self.positions[player.turn[1]]] = None
+        self.grid[self.current_position(player)[0]][self.current_position(player)[1]] = None
         self.grid[graph_index[0]][graph_index[1]] = player.turn
         self.positions[player.turn] = graph_index
 
@@ -61,7 +61,8 @@ class PlayerBoard:
         Args:
             player (Player): Player to remove from the board.
         """
-        self.grid[self.positions[player.turn[0]]][self.positions[player.turn[1]]] = None
+        #self.grid[self.positions[player.turn[0]]][self.positions[player.turn[1]]] = None
+        self.grid[self.current_position(player)[0]][self.current_position(player)[1]] = None
         self.positions[player.turn] = None
 
     def current_position(self, player):

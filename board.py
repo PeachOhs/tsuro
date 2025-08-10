@@ -107,5 +107,5 @@ class Board:
             player.in_game = False
             return False
         else:
-            self.player_board.move(self, player, current_position)
+            self.player_board.move(player, current_position)
             return True
