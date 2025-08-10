@@ -51,7 +51,7 @@ class Deck:
         """
         self.deck.append(tile)
         # If the dragon tile is in the deck, push it to the back of the deck
-        names = self.deck.get_names()
+        names = self.get_names()
         if "00" in names:
             index = names.index("00")
             dragon = self.deck.pop(index)
@@ -70,7 +70,7 @@ class Deck:
         from random import shuffle
         shuffle(self.deck)
         # If the dragon tile is in the deck, push it to the back of the deck
-        names = self.deck.get_names()
+        names = self.get_names()
         if "00" in names:
             index = names.index("00")
             dragon = self.deck.pop(index)
