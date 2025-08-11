@@ -20,7 +20,7 @@ class Deck:
         Creates a new Deck.
         """
         self.deck = []
-        with open('tiles.json') as json_file:
+        with open('tiles.json', "r") as json_file:
             data = json.load(json_file)
         a = np.arange(1,36)
         random.shuffle(a)
