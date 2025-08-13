@@ -136,3 +136,96 @@ def board_index_to_tile_facing(graph_index, facing, rows, cols):
 
     board_index = board_index_to_tile(graph_index, tile_index)
     return (board_index[0] + column_offset,board_index[1] + row_offset)
+
+def board_index_to_tile_pair(graph_index, rows, cols):
+    """
+    Converts an (x, y) graph board index to one or two board indexes.
+
+    Args:
+        graph_index (tuple): Row and column index of the position in the 
+            graph board.
+        rows (int): Number of rows in the grid graph.
+        cols (int): Number of columns in the grid graph.
+    Returns:
+        A list of 2-tuple(s) indicating the tile's position(s) in the board.
+    """
+    tiles = []
+
+    if graph_index[0] == 0:
+        facings = ["-D"] # facing right
+    elif graph_index[1] == 0:
+        facings = ["-A"] # facing down
+    elif graph_index[0] == rows - 1:
+        facings = ["-B"] # facing left
+    elif graph_index[1] == cols - 1:
+        facings = ["-C"] # facing up
+    elif graph_index[0]%3 in [1,2]:
+        facings = ["-C","-A"] # facing up or down
+    elif graph_index[1]%3 in [1,2]:
+        facings = ["-D","-B"] # facing left or right
+
+    for facing in facings:
+        row_offset = 0
+        column_offset = 0
+        if facing == "B" or facing == 2 or facing == -4 or facing == "-D":
+            tile_index = graph_index[1]%3 + 1
+            if str(facing)[0] == "-":
+                column_offset = 1
+            #tile_index = 2
+            #tile_index = 3
+        elif facing == "C" or facing == 3 or facing == -1 or facing == "-A":
+            tile_index = graph_index[0]%3 + 3
+            if str(facing)[0] == "-":
+                row_offset = 1
+            #tile_index = 4
+            #tile_index = 5
+        elif facing == "D" or facing == 4 or facing == -2 or facing == "-B":
+            tile_index = graph_index[1]%3 + 5
+            if str(facing)[0] == "-":
+                column_offset = -1
+            #tile_index = 6
+            #tile_index = 7
+        else:#if facing == "A" or facing = 1 or facing == -3 or facing == "-C":
+            tile_index = graph_index[0]%3 - 1
+            if str(facing)[0] == "-":
+                row_offset = -1
+            #tile_index = 0
+            #tile_index = 1
+        board_index = board_index_to_tile(graph_index, tile_index)
+        print(str(board_index[0])+","+str(board_index[1]))
+        tiles.append((board_index[0] + column_offset,board_index[1] + row_offset))
+    return tiles
+
+def get_facing(graph_index, tile_board):
+    """
+    Return direction of empty tile.
+
+    Args:
+        graph_index (tuple): Row and column index of the position in the 
+            graph board.
+        tile_board: Positions of the tiles on the board
+    Returns:
+        An int indicating the player's facing direction on the board.
+    """
+    rows = tile_board.graph_rows
+    cols = tile_board.graph_cols
+    tile_options = board_index_to_tile_pair(graph_index, rows, cols)
+
+    if graph_index[0] == 0:
+        facing = "D" # facing right
+    elif graph_index[1] == 0:
+        facing = "A" # facing down
+    elif graph_index[0]%3 in [1,2]:
+        # facing up or down
+        for tile_option in tile_options:
+            if tile_board[tile_option[0]][tile_option[1]] == None:
+                print(str(tile_option[0])+","+str(tile_option[1]))
+        facing = ""
+    elif graph_index[1]%3 in [1,2]:
+        # facing left or right
+        for tile_option in tile_options:
+            if tile_board[tile_option[0]][tile_option[1]] == None:
+                print(str(tile_option[0])+","+str(tile_option[1]))
+        facing = ""
+
+    
