@@ -151,18 +151,26 @@ def board_index_to_tile_pair(graph_index, rows, cols):
     """
     tiles = []
 
-    if graph_index[0] == 0:
-        facings = ["-D"] # facing right
-    elif graph_index[1] == 0:
-        facings = ["-A"] # facing down
-    elif graph_index[0] == rows - 1:
-        facings = ["-B"] # facing left
-    elif graph_index[1] == cols - 1:
-        facings = ["-C"] # facing up
-    elif graph_index[0]%3 in [1,2]:
-        facings = ["-C","-A"] # facing up or down
-    elif graph_index[1]%3 in [1,2]:
-        facings = ["-D","-B"] # facing left or right
+    """
+    graph_index[0] = col
+    graph_index[1] = row
+    """
+
+    if (graph_index[0]%3 in [1,2] and graph_index[1]%3 in [0,3]) or (graph_index[1]%3 in [1,2] and graph_index[0]%3 in [0,3]):
+        if graph_index[0] == 0:
+            facings = ["-D"] # facing right
+        elif graph_index[1] == 0:
+            facings = ["-A"] # facing down
+        elif graph_index[0] == cols - 1:
+            facings = ["-B"] # facing left
+        elif graph_index[1] == rows - 1:
+            facings = ["-C"] # facing up
+        elif graph_index[0]%3 in [1,2]:
+            facings = ["-C","-A"] # facing up or down
+        elif graph_index[1]%3 in [1,2]:
+            facings = ["-D","-B"] # facing left or right
+    else:
+        raise Exception("illegal graph_index: ("+str(graph_index[0])+", "+str(graph_index[1])+")")
 
     for facing in facings:
         row_offset = 0
@@ -192,9 +200,9 @@ def board_index_to_tile_pair(graph_index, rows, cols):
             #tile_index = 0
             #tile_index = 1
         board_index = board_index_to_tile(graph_index, tile_index)
-        print(str(board_index[0])+","+str(board_index[1]))
+        print(str(board_index[0])+"+"+str(column_offset)+","+str(board_index[1])+"+"+str(row_offset))
         tiles.append((board_index[0] + column_offset,board_index[1] + row_offset))
-    return tiles
+    return sorted(tiles, key=lambda coord: (coord[0],coord[1]))
 
 def get_facing(graph_index, tile_board):
     """

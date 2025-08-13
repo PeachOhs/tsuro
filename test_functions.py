@@ -9,6 +9,14 @@ import pytest
 from helper import *
 
 #class TestBoard_index_to_tile_pair(unittest.TestCase):
+def test_board_to_tile():
+    assert board_index_to_tile((6,7), 2) == (1,2)
+    assert board_index_to_tile((6,7), 7) == (2,2)
+
+def test_illegal_graph_index():
+    with pytest.raises(Exception):
+        board_index_to_tile_pair((1,1), 19, 19)
+
 def test_top_edges():
     assert board_index_to_tile_pair((1,0), 19, 19) == [(0,0)]
     assert board_index_to_tile_pair((2,0), 19, 19) == [(0,0)]
