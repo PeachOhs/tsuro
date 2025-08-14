@@ -200,7 +200,7 @@ def board_index_to_tile_pair(graph_index, rows, cols):
             #tile_index = 0
             #tile_index = 1
         board_index = board_index_to_tile(graph_index, tile_index)
-        print(str(board_index[0])+"+"+str(column_offset)+","+str(board_index[1])+"+"+str(row_offset))
+        print("( "+str(board_index[0])+" + "+str(column_offset)+" , "+str(board_index[1])+" + "+str(row_offset)+" )")
         tiles.append((board_index[0] + column_offset,board_index[1] + row_offset))
     return sorted(tiles, key=lambda coord: (coord[0],coord[1]))
 

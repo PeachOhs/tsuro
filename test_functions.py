@@ -12,6 +12,8 @@ from helper import *
 def test_board_to_tile():
     assert board_index_to_tile((6,7), 2) == (1,2)
     assert board_index_to_tile((6,7), 7) == (2,2)
+    assert board_index_to_tile((4,15),0) == (1,5)
+    assert board_index_to_tile((4,15),5) == (1,4)
 
 def test_illegal_graph_index():
     with pytest.raises(Exception):
