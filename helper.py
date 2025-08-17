@@ -205,7 +205,7 @@ def board_index_to_tile_pair(graph_index, rows, cols):
         tiles.append((board_index[0] + column_offset,board_index[1] + row_offset))
     return sorted(tiles, key=lambda coord: (coord[0],coord[1]))
 
-def get_facing(graph_index, tile_board):
+def get_facing(graph_index, tile_board, rows, cols):
     """
     Return direction of empty tile.
 
@@ -214,27 +214,45 @@ def get_facing(graph_index, tile_board):
             graph board.
         tile_board: Positions of the tiles on the board
     Returns:
-        An int indicating the player's facing direction on the board.
+        A signed int or "signed char" indicating the player's facing direction on the board.
     """
-    rows = tile_board.graph_rows
-    cols = tile_board.graph_cols
+    if rows == None:
+        rows = tile_board.graph_rows
+    if cols == None:
+        cols = tile_board.graph_cols
     tile_options = board_index_to_tile_pair(graph_index, rows, cols)
 
     if graph_index[0] == 0:
-        facing = "D" # facing right
+        facing = "B" # facing right
     elif graph_index[1] == 0:
-        facing = "A" # facing down
+        facing = "C" # facing down
+    elif graph_index[0] == cols - 1:
+        facing = "D" # facing left
+    elif graph_index[1] == rows - 1:
+        facing = "A" # facing up
     elif graph_index[0]%3 in [1,2]:
         # facing up or down
         for tile_option in tile_options:
             if tile_board[tile_option[0]][tile_option[1]] == None:
                 print(str(tile_option[0])+","+str(tile_option[1]))
-        facing = ""
+                if board_index_to_tile_side(graph_index, "A", rows, cols) == tile_option:
+                    facing = "A"
+                elif board_index_to_tile_side(graph_index, "C", rows, cols) == tile_option:
+                    facing = "C"
+                else:
+                    facing = None
+                break
     elif graph_index[1]%3 in [1,2]:
         # facing left or right
         for tile_option in tile_options:
             if tile_board[tile_option[0]][tile_option[1]] == None:
                 print(str(tile_option[0])+","+str(tile_option[1]))
-        facing = ""
+                if board_index_to_tile_side(graph_index, "B", rows, cols) == tile_option:
+                    facing = "B"
+                elif board_index_to_tile_side(graph_index, "D", rows, cols) == tile_option:
+                    facing = "D"
+                else:
+                    facing = None
+                break
 
-    
+    return facing

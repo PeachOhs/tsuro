@@ -24,6 +24,22 @@ def test_all_tile_indexes():
                 graph_index = tile_to_board_index(i,(x,y))
                 assert board_index_to_tile(graph_index,i) == (x,y)
 
+def test_get_facing():
+    rows = 6
+    cols = 6
+    graph_rows = 3 * rows + 1
+    graph_cols = 3 * cols + 1
+    tile_board = [[None for _ in range(cols)] for _ in range(rows)]
+    tile_spots = [(0,0),(5,0),(1,1),(3,1),(2,2),(3,3),(0,4),(4,4),(2,5),(5,5)]
+    for board_index in tile_spots:
+        tile_board[board_index[0]][board_index[1]] = "Something"
+    for board_index in tile_spots:
+        for i in numpy.arange(0,8):
+            graph_index = tile_to_board_index(i,board_index)
+            facing = get_facing(graph_index, tile_board, graph_rows, graph_cols)
+            if on_edge(graph_index, graph_rows, graph_cols):
+                assert facing == None
+
 def test_all_tile_side():
     for i in numpy.arange(0,8):
         for x in numpy.arange(0,6):

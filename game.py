@@ -84,7 +84,7 @@ class Game:
             current_graph_position = self.board.player_board.current_position(self.current_player)
             facing = get_facing(current_graph_position,self.board.tile_board)
             # test place tiles
-            tilePlace = board_index_to_tile_facing(current_graph_position,facing,self.board.graph_rows,self.board.graph_cols)
+            tilePlace = board_index_to_tile_side(current_graph_position,facing,self.board.graph_rows,self.board.graph_cols)
             self.add_tile(self.current_player.get_from_hand(),tilePlace)
             # test eliminate player on their turn
             if i in numpy.array([10,13,18,24]):
