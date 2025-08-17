@@ -7,6 +7,8 @@ in the root dir of the project
 #import unittest
 import pytest
 from helper import *
+import array
+import numpy
 
 #class TestBoard_index_to_tile_pair(unittest.TestCase):
 def test_board_to_tile():
@@ -14,6 +16,23 @@ def test_board_to_tile():
     assert board_index_to_tile((6,7), 7) == (2,2)
     assert board_index_to_tile((4,15),0) == (1,5)
     assert board_index_to_tile((4,15),5) == (1,4)
+
+def test_all_tile_indexes():
+    for i in numpy.arange(0,8):
+        for x in numpy.arange(0,6):
+            for y in numpy.arange(0,6):
+                graph_index = tile_to_board_index(i,(x,y))
+                assert board_index_to_tile(graph_index,i) == (x,y)
+
+def test_all_tile_side():
+    for i in numpy.arange(0,8):
+        for x in numpy.arange(0,6):
+            for y in numpy.arange(0,6):
+                graph_index = tile_to_board_index(int(i),(int(x),int(y)))
+                if on_edge(graph_index, 19, 19):
+                    #print("("+str(graph_index[0])+", "+str(graph_index[1])+"), "+str(i))
+                    assert board_index_to_tile_side(graph_index, None, 19, 19) == (int(x),int(y))
+                #assert board_index_to_tile(graph_index,i) == (x,y)
 
 def test_illegal_graph_index():
     with pytest.raises(Exception):

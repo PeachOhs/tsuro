@@ -78,7 +78,7 @@ def board_index_to_tile(graph_index, tile_index):
         column_offset = 2
     return (int((graph_index[0] - column_offset)/3),int((graph_index[1] - row_offset)/3))
 
-def board_index_to_tile_facing(graph_index, facing, rows, cols):
+def board_index_to_tile_side(graph_index, side, rows, cols):
     """
     Converts an (x, y) graph board index to a board index.
 
@@ -95,47 +95,48 @@ def board_index_to_tile_facing(graph_index, facing, rows, cols):
     row_offset = 0
     column_offset = 0
 
-    if facing is None:
+    if side is None:
         if on_edge(graph_index, rows, cols):
-            # set facing based on edge
+            # set side based on edge
             if graph_index[0] == 0:
-                facing = "D"
+                side = "D"
             elif graph_index[0] == rows - 1:
-                facing = "B"
+                side = "B"
             elif graph_index[1] == 0:
-                facing = "A"
+                side = "A"
             elif graph_index[1] == cols - 1:
-                facing = "C"
+                side = "C"
         else:
-            raise Exception("For board_index_to_tile_facing, facing is needed when graph_index not on edge")
+            raise Exception("For board_index_to_tile_side, side is needed when graph_index not on edge")
 
-    if facing == "B" or facing == 2 or facing == -4 or facing == "-D":
+    if side == "B" or side == 2 or side == -4 or side == "-D":
         tile_index = graph_index[1]%3 + 1
-        if str(facing)[0] == "-":
+        if str(side)[0] == "-":
             column_offset = 1
         #tile_index = 2
         #tile_index = 3
-    elif facing == "C" or facing == 3 or facing == -1 or facing == "-A":
-        tile_index = graph_index[0]%3 + 3
-        if str(facing)[0] == "-":
+    elif side == "C" or side == 3 or side == -1 or side == "-A":
+        tile_index = abs(graph_index[0]%3 - 6)
+        if str(side)[0] == "-":
             row_offset = 1
         #tile_index = 4
         #tile_index = 5
-    elif facing == "D" or facing == 4 or facing == -2 or facing == "-B":
-        tile_index = graph_index[1]%3 + 5
-        if str(facing)[0] == "-":
+    elif side == "D" or side == 4 or side == -2 or side == "-B":
+        tile_index = abs(graph_index[1]%3 - 8)
+        if str(side)[0] == "-":
             column_offset = -1
         #tile_index = 6
         #tile_index = 7
-    else:#if facing == "A" or facing = 1 or facing == -3 or facing == "-C":
+    else:#if side == "A" or side = 1 or side == -3 or side == "-C":
         tile_index = graph_index[0]%3 - 1
-        if str(facing)[0] == "-":
+        if str(side)[0] == "-":
             row_offset = -1
         #tile_index = 0
         #tile_index = 1
 
-    board_index = board_index_to_tile(graph_index, tile_index)
-    return (board_index[0] + column_offset,board_index[1] + row_offset)
+    board_index = board_index_to_tile(graph_index, int(tile_index))
+    #print("("+str(graph_index[0])+", "+str(graph_index[1])+"), "+str(tile_index)+" => ("+str(board_index[0])+", "+str(board_index[1])+")")
+    return (int(board_index[0] + column_offset),int(board_index[1] + row_offset))
 
 def board_index_to_tile_pair(graph_index, rows, cols):
     """
@@ -182,13 +183,13 @@ def board_index_to_tile_pair(graph_index, rows, cols):
             #tile_index = 2
             #tile_index = 3
         elif facing == "C" or facing == 3 or facing == -1 or facing == "-A":
-            tile_index = graph_index[0]%3 + 3
+            tile_index = abs(graph_index[0]%3 - 6)
             if str(facing)[0] == "-":
                 row_offset = 1
             #tile_index = 4
             #tile_index = 5
         elif facing == "D" or facing == 4 or facing == -2 or facing == "-B":
-            tile_index = graph_index[1]%3 + 5
+            tile_index = abs(graph_index[1]%3 - 8)
             if str(facing)[0] == "-":
                 column_offset = -1
             #tile_index = 6
@@ -200,7 +201,7 @@ def board_index_to_tile_pair(graph_index, rows, cols):
             #tile_index = 0
             #tile_index = 1
         board_index = board_index_to_tile(graph_index, tile_index)
-        print("( "+str(board_index[0])+" + "+str(column_offset)+" , "+str(board_index[1])+" + "+str(row_offset)+" )")
+        #print("( "+str(board_index[0])+" + "+str(column_offset)+" , "+str(board_index[1])+" + "+str(row_offset)+" )")
         tiles.append((board_index[0] + column_offset,board_index[1] + row_offset))
     return sorted(tiles, key=lambda coord: (coord[0],coord[1]))
 
