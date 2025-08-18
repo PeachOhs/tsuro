@@ -39,9 +39,12 @@ class TileBoard:
             board_index (tuple): Row and column index of the tile in the 
                 tile board.
         """
-        if tile.is_dragon_tile:
-            self.dragon_tile_locations = []
-            self.dragon_tile_locations.append(board_index)
-            return
-        else:
+        try:
+            if tile.is_dragon_tile:
+                self.dragon_tile_locations = []
+                self.dragon_tile_locations.append(board_index)
+                return
+            else:
+                self.board[board_index[0]][board_index[1]] = tile
+        except:
             self.board[board_index[0]][board_index[1]] = tile

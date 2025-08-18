@@ -78,7 +78,7 @@ def board_index_to_tile(graph_index, tile_index):
         column_offset = 2
     return (int((graph_index[0] - column_offset)/3),int((graph_index[1] - row_offset)/3))
 
-def board_index_to_tile_side(graph_index, side, rows, cols):
+def board_index_to_tile_side(graph_index, rows, cols, side = None):
     """
     Converts an (x, y) graph board index to a board index.
 
@@ -205,7 +205,7 @@ def board_index_to_tile_pair(graph_index, rows, cols):
         tiles.append((board_index[0] + column_offset,board_index[1] + row_offset))
     return sorted(tiles, key=lambda coord: (coord[0],coord[1]))
 
-def get_facing(graph_index, tile_board, rows, cols):
+def get_facing(graph_index, tile_board, rows = None, cols = None):
     """
     Return direction of empty tile.
 
@@ -237,21 +237,21 @@ def get_facing(graph_index, tile_board, rows, cols):
     if graph_index[0]%3 in [1,2]:
         # facing up or down
         for tile_option in tile_options:
-            if tile_board[tile_option[0]][tile_option[1]] == None:
+            if tile_board.board[tile_option[0]][tile_option[1]] == None:
                 print(str(tile_option[0])+","+str(tile_option[1]))
-                if board_index_to_tile_side(graph_index, "A", rows, cols) == tile_option:
+                if board_index_to_tile_side(graph_index, rows, cols, "A") == tile_option:
                     facing = "C"
-                elif board_index_to_tile_side(graph_index, "C", rows, cols) == tile_option:
+                elif board_index_to_tile_side(graph_index, rows, cols, "C") == tile_option:
                     facing = "A"
                 break
     elif graph_index[1]%3 in [1,2]:
         # facing left or right
         for tile_option in tile_options:
-            if tile_board[tile_option[0]][tile_option[1]] == None:
+            if tile_board.board[tile_option[0]][tile_option[1]] == None:
                 print(str(tile_option[0])+","+str(tile_option[1]))
-                if board_index_to_tile_side(graph_index, "B", rows, cols) == tile_option:
+                if board_index_to_tile_side(graph_index, rows, cols, "B") == tile_option:
                     facing = "D"
-                elif board_index_to_tile_side(graph_index, "D", rows, cols) == tile_option:
+                elif board_index_to_tile_side(graph_index, rows, cols, "D") == tile_option:
                     facing = "B"
                 break
 

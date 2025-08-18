@@ -9,6 +9,7 @@ import pytest
 from helper import *
 import array
 import numpy
+from tileboard import TileBoard
 
 #class TestBoard_index_to_tile_pair(unittest.TestCase):
 def test_board_to_tile():
@@ -29,10 +30,10 @@ def test_get_facing():
     cols = 6
     graph_rows = 3 * rows + 1
     graph_cols = 3 * cols + 1
-    tile_board = [[None for _ in range(cols)] for _ in range(rows)]
+    tile_board = TileBoard(rows, cols)
     tile_spots = [(0,0),(5,0),(1,1),(3,1),(2,2),(3,3),(0,4),(4,4),(2,5),(5,5)]
     for board_index in tile_spots:
-        tile_board[board_index[0]][board_index[1]] = "Something"
+        tile_board.add_tile("Something", board_index)
     for board_index in tile_spots:
         for i in numpy.arange(0,8):
             graph_index = tile_to_board_index(i,board_index)
@@ -55,7 +56,7 @@ def test_all_tile_side():
                 graph_index = tile_to_board_index(int(i),(int(x),int(y)))
                 if on_edge(graph_index, 19, 19):
                     #print("("+str(graph_index[0])+", "+str(graph_index[1])+"), "+str(i))
-                    assert board_index_to_tile_side(graph_index, None, 19, 19) == (int(x),int(y))
+                    assert board_index_to_tile_side(graph_index, 19, 19) == (int(x),int(y))
                 #assert board_index_to_tile(graph_index,i) == (x,y)
 
 def test_illegal_graph_index():
