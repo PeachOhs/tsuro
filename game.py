@@ -73,16 +73,17 @@ class Game:
         if all([x is not None for x in self.players]):
             self.in_game = True
         
+        i = 0
         # activate below line once full game logic is in place
         #while (self.in_game):
-        # deactivate below line once full game logic is in place
-        i = 0
         # deactivate below line once full game logic is in place
         while (i in numpy.arange(0,32) and self.in_game):
             self.next_turn()
             #TODO: Facing should be A, B, C, D, -A, -B, -C, or -D
             current_graph_position = self.board.player_board.current_position(self.current_player)
+            print(current_graph_position)
             facing = get_facing(current_graph_position,self.board.tile_board)
+            print(facing)
             # test place tiles
             tilePlace = board_index_to_tile_side(current_graph_position, self.board.graph_rows, self.board.graph_cols, facing)
             self.add_tile(self.current_player.get_from_hand(),tilePlace)
@@ -124,6 +125,8 @@ class Game:
         """
         if not self.board.move(player):
             #self.players[player.turn] = None
+            player.remove_from_game()
+        if on_edge(player.visited[-1], self.board.player_board.graph_rows, self.board.player_board.graph_cols):
             player.remove_from_game()
 
     def next_turn(self):

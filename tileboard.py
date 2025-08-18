@@ -39,6 +39,7 @@ class TileBoard:
             board_index (tuple): Row and column index of the tile in the 
                 tile board.
         """
+        print("Adding to board: (" + str(board_index[0]) + ", " + str(board_index[1]) + ")")
         try:
             if tile.is_dragon_tile:
                 self.dragon_tile_locations = []
