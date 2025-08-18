@@ -222,6 +222,9 @@ def get_facing(graph_index, tile_board, rows, cols):
         cols = tile_board.graph_cols
     tile_options = board_index_to_tile_pair(graph_index, rows, cols)
 
+    facing = None
+
+    """ The following code is commented out because even edges need to be checked for empty tiles.
     if graph_index[0] == 0:
         facing = "B" # facing right
     elif graph_index[1] == 0:
@@ -230,17 +233,16 @@ def get_facing(graph_index, tile_board, rows, cols):
         facing = "D" # facing left
     elif graph_index[1] == rows - 1:
         facing = "A" # facing up
-    elif graph_index[0]%3 in [1,2]:
+    el"""
+    if graph_index[0]%3 in [1,2]:
         # facing up or down
         for tile_option in tile_options:
             if tile_board[tile_option[0]][tile_option[1]] == None:
                 print(str(tile_option[0])+","+str(tile_option[1]))
                 if board_index_to_tile_side(graph_index, "A", rows, cols) == tile_option:
-                    facing = "A"
-                elif board_index_to_tile_side(graph_index, "C", rows, cols) == tile_option:
                     facing = "C"
-                else:
-                    facing = None
+                elif board_index_to_tile_side(graph_index, "C", rows, cols) == tile_option:
+                    facing = "A"
                 break
     elif graph_index[1]%3 in [1,2]:
         # facing left or right
@@ -248,11 +250,9 @@ def get_facing(graph_index, tile_board, rows, cols):
             if tile_board[tile_option[0]][tile_option[1]] == None:
                 print(str(tile_option[0])+","+str(tile_option[1]))
                 if board_index_to_tile_side(graph_index, "B", rows, cols) == tile_option:
-                    facing = "B"
-                elif board_index_to_tile_side(graph_index, "D", rows, cols) == tile_option:
                     facing = "D"
-                else:
-                    facing = None
+                elif board_index_to_tile_side(graph_index, "D", rows, cols) == tile_option:
+                    facing = "B"
                 break
 
     return facing

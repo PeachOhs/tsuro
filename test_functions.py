@@ -39,6 +39,14 @@ def test_get_facing():
             facing = get_facing(graph_index, tile_board, graph_rows, graph_cols)
             if on_edge(graph_index, graph_rows, graph_cols):
                 assert facing == None
+            elif (board_index == (1,1) and i in [0,1]) or (board_index == (3,1) and i in [0,1]) or (board_index == (2,2) and i in [0,1]) or (board_index == (3,3) and i in [0,1]) or (board_index == (0,4) and i in [0,1]) or (board_index == (4,4) and i in [0,1]) or (board_index == (2,5) and i in [0,1]) or (board_index == (5,5) and i in [0,1]):
+                assert facing == "A"
+            elif (board_index == (0,0) and i in [2,3]) or (board_index == (1,1) and i in [2,3]) or (board_index == (3,1) and i in [2,3]) or (board_index == (2,2) and i in [2,3]) or (board_index == (3,3) and i in [2,3]) or (board_index == (0,4) and i in [2,3]) or (board_index == (4,4) and i in [2,3]) or (board_index == (2,5) and i in [2,3]):
+                assert facing == "B"
+            elif (board_index == (0,0) and i in [4,5]) or (board_index == (5,0) and i in [4,5]) or (board_index == (1,1) and i in [4,5]) or (board_index == (3,1) and i in [4,5]) or (board_index == (2,2) and i in [4,5]) or (board_index == (3,3) and i in [4,5]) or (board_index == (0,4) and i in [4,5]) or (board_index == (4,4) and i in [4,5]) or (board_index == (2,5) and i in [4,5]):
+                assert facing == "C"
+            elif (board_index == (5,0) and i in [6,7]) or (board_index == (1,1) and i in [6,7]) or (board_index == (3,1) and i in [6,7]) or (board_index == (2,2) and i in [6,7]) or (board_index == (3,3) and i in [6,7]) or (board_index == (4,4) and i in [6,7]) or (board_index == (2,5) and i in [6,7]) or (board_index == (5,5) and i in [6,7]):
+                assert facing == "D"
 
 def test_all_tile_side():
     for i in numpy.arange(0,8):
