@@ -112,25 +112,25 @@ def board_index_to_tile_side(graph_index, rows, cols, side = None):
     if side == "B" or side == 2 or side == -4 or side == "-D":
         tile_index = graph_index[1]%3 + 1
         if str(side)[0] == "-":
-            column_offset = 1
+            column_offset = -1
         #tile_index = 2
         #tile_index = 3
     elif side == "C" or side == 3 or side == -1 or side == "-A":
         tile_index = abs(graph_index[0]%3 - 6)
         if str(side)[0] == "-":
-            row_offset = 1
+            row_offset = -1
         #tile_index = 4
         #tile_index = 5
     elif side == "D" or side == 4 or side == -2 or side == "-B":
         tile_index = abs(graph_index[1]%3 - 8)
         if str(side)[0] == "-":
-            column_offset = -1
+            column_offset = 1
         #tile_index = 6
         #tile_index = 7
-    else:#if side == "A" or side = 1 or side == -3 or side == "-C":
+    elif side == "A" or side == 1 or side == -3 or side == "-C":
         tile_index = graph_index[0]%3 - 1
         if str(side)[0] == "-":
-            row_offset = -1
+            row_offset = 1
         #tile_index = 0
         #tile_index = 1
 
