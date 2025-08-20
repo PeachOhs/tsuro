@@ -97,6 +97,12 @@ class Game:
             #if i in numpy.array([14,18,22]):
             #    self.active_players[0].remove_from_game()
             # deactivate below line once full game logic is in place
+            #if self.current_player.in_game():
+            if self.current_player in self.active_players:
+                tile = self.deck.pop()
+                self.current_player.add_to_hand(tile)
+            else:
+                print("Player "+self.current_player.get_name()+" is inactive and needs to return hand to deck")
             i += 1
 
     def add_tile(self, tile, board_index):
@@ -129,9 +135,11 @@ class Game:
         if not self.board.move(player):
             #self.players[player.turn] = None
             player.remove_from_game()
+            self.active_players.pop(self.active_players.index(player))
             return
         if on_edge(player.visited[-1], self.board.player_board.graph_rows, self.board.player_board.graph_cols):
             player.remove_from_game()
+            self.active_players.pop(self.active_players.index(player))
             return
 
     def next_turn(self):

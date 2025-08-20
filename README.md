@@ -17,7 +17,7 @@ The primary objective of this python repository is to make a functional game of 
     - [x] each player places their pawn on one of the outside marks on the board
     - [x] starts the first and subsequent turns
     - [ ] player turn functionality
-        - [ ] current player places a path tile from the tiles in their hand
+        - [x] current player places a path tile from the tiles in their hand
             - [ ] if all tiles are on the board, the game ends
         - [ ] current player moves all pawns forward along the paths on the path tile played
             - [ ] if a player pawn moves off the board or collides with another player pawn, they are eliminated
@@ -26,7 +26,7 @@ The primary objective of this python repository is to make a functional game of 
                 - [ ] any player with the dragon tile draws one tile from the deck and passes the dragon tile to the next player who has less than 3 tiles in their hand
                     - [ ] if all players have 3 tiles, the dragon tile returns to the deck
                 - [x] if only 1 player remains, the game ends
-        - [ ] current player draws a new path tile from the deck if tiles are in the deck
+        - [x] current player draws a new path tile from the deck if tiles are in the deck
 - [ ] Output board state at the end of the game
 - [ ] \(Optional) UI for the game
 - [ ] [NEAT implementation](https://neat-python.readthedocs.io/en/latest/)

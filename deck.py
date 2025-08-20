@@ -41,6 +41,7 @@ class Deck:
         tile = Tile(data[0]["tile"], connected_pairs)
         tile.is_dragon_tile = True
         self.push(tile)
+        print("Deck is "+str(self.count())+" tiles")
 
     def push(self, tile):
         """
@@ -56,11 +57,14 @@ class Deck:
             index = names.index("00")
             dragon = self.deck.pop(index)
             self.deck.append(dragon)
+        
+        print("Deck is "+str(self.count())+" tiles")
 
     def pop(self):
         """
         Gets and returns a tile from the top of the deck.
         """
+        print("Deck is "+str(self.count() - 1)+" tiles")
         return self.deck.pop(0)
 
     def shuffle(self):
@@ -84,3 +88,9 @@ class Deck:
         for tile in self.deck:
             names.append(tile.name)
         return names
+
+    def count(self):
+        """
+        Returns the number of tiles in the deck.
+        """
+        return len(self.deck)
