@@ -77,7 +77,7 @@ class Game:
         # activate below line once full game logic is in place
         #while (self.in_game):
         # deactivate below line once full game logic is in place
-        while (i in numpy.arange(0,32) and self.in_game):
+        while (i in numpy.arange(0,32) and self.in_game) and self.in_game and self.current_player != None:
             self.next_turn()
             #TODO: Facing should be A, B, C, D, -A, -B, -C, or -D
             current_graph_position = self.board.player_board.current_position(self.current_player)
