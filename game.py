@@ -91,11 +91,11 @@ class Game:
             print(tilePlace)
             self.add_tile(self.current_player.get_from_hand(),tilePlace)
             # test eliminate player on their turn
-            if i in numpy.array([10,13,18,24]):
-                self.current_player.remove_from_game()
+            #if i in numpy.array([10,13,18,24]):
+            #    self.current_player.remove_from_game()
             # test eliminate player on another player's turn
-            if i in numpy.array([14,18,22]):
-                self.active_players[0].remove_from_game()
+            #if i in numpy.array([14,18,22]):
+            #    self.active_players[0].remove_from_game()
             # deactivate below line once full game logic is in place
             i += 1
 
@@ -129,8 +129,10 @@ class Game:
         if not self.board.move(player):
             #self.players[player.turn] = None
             player.remove_from_game()
+            return
         if on_edge(player.visited[-1], self.board.player_board.graph_rows, self.board.player_board.graph_cols):
             player.remove_from_game()
+            return
 
     def next_turn(self):
         """
